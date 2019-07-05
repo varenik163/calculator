@@ -9,7 +9,7 @@ function ButtonsContainer(props) {
 		<View>
 			<Row>
 				<Button
-					text="AC"
+					text="C"
 					theme="secondary"
 					onPress={() => handleTap("clear")}
 				/>
@@ -73,7 +73,7 @@ function ButtonsContainer(props) {
 					size="double"
 					onPress={() => handleTap("number", 0)}
 				/>
-				<Button text="," onPress={() => handleTap("number", ",")} />
+				<Button text="," onPress={() => handleTap("number", ".")} />
 				<Button
 					text="="
 					theme="accent"

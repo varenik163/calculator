@@ -1,14 +1,9 @@
-export const initialState = {
-	currentValue: "",
-	operator: null,
-	previousValue: null,
-	waitingNextOperand: null
-};
-
 export const handleNumber = (value, state) => {
-	const newCurrentValue = state.currentValue === "0" ? `${value}` : `${state.currentValue}${value}`
-
+	console.log()
+	const newCurrentValue = (state.currentValue === "0" && value !== '.') ? `${value}` : `${state.currentValue}${value}`;
+	console.log(newCurrentValue)
 	return {
+		...state,
 		currentValue: newCurrentValue,
 		waitingNextOperand: null
 	};
@@ -25,30 +20,31 @@ export const handleEqual = state => {
 		waitingNextOperand: null
 	};
 
+
 	if (operator === "/") {
 		return {
-			currentValue: previous / current,
+			currentValue: +(previous / current).toFixed(10),
 			...resetState
 		};
 	}
 
 	if (operator === "*") {
 		return {
-			currentValue: previous * current,
+			currentValue: +(previous * current).toFixed(10),
 			...resetState
 		};
 	}
 
 	if (operator === "+") {
 		return {
-			currentValue: previous + current,
+			currentValue: +(previous + current).toFixed(10),
 			...resetState
 		};
 	}
 
 	if (operator === "-") {
 		return {
-			currentValue: previous - current,
+			currentValue: +(previous - current).toFixed(10),
 			...resetState
 		};
 	}
@@ -56,31 +52,31 @@ export const handleEqual = state => {
 	return state;
 };
 
-const calculator = (type, value, state) => {
+const calculator = (type, value, state, setStateFunc, clearStateFunc) => {
 	switch (type) {
 		case "number":
-			return handleNumber(value, state);
+			return setStateFunc(handleNumber(value, state));
 		case "operator":
-			return {
+			return setStateFunc({
 				operator: value,
-				previousValue: state.currentValue,
+				previousValue: handleEqual(state).currentValue,
 				currentValue: "0",
 				waitingNextOperand: value
-			};
+			});
 		case "equal":
-			return handleEqual(state);
+			return setStateFunc(handleEqual(state));
 		case "clear":
-			return initialState;
+			return clearStateFunc();
 		case "posneg":
-			return {
-				currentValue: `${parseFloat(state.currentValue) * -1}`
-			};
+			return setStateFunc({
+				currentValue: `${+(parseFloat(state.currentValue) * -1).toFixed(10)}`
+			});
 		case "percentage":
-			return {
-				currentValue: `${parseFloat(state.currentValue) * 0.01}`
-			};
+			return setStateFunc({
+				currentValue: `${+(parseFloat(state.currentValue) * 0.01).toFixed(10)}`
+			});
 		default:
-			return state;
+			return setStateFunc(state);
 	}
 };
 
