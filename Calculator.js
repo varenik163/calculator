@@ -5,7 +5,7 @@ import calculator  from "./utils/calculator";
 import ButtonsContainer from "./components/ButtonsContainer";
 import { setCalculatorState, clearCalculatorState} from './redux/reducer'
 
-class Caclulator extends React.Component {
+class Calculator extends React.Component {
 
 	handleTap = (type, value) => {
 		const { calculatorState, clearCalculatorState, setCalculatorState } = this.props;
@@ -35,7 +35,7 @@ export default connect(state => ({
 }), {
 	setCalculatorState,
 	clearCalculatorState
-})(Caclulator)
+})(Calculator)
 
 const styles = StyleSheet.create({
 	container: {
