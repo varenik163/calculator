@@ -1,7 +1,6 @@
 export const handleNumber = (value, state) => {
-	console.log()
 	const newCurrentValue = (state.currentValue === "0" && value !== '.') ? `${value}` : `${state.currentValue}${value}`;
-	console.log(newCurrentValue)
+
 	return {
 		...state,
 		currentValue: newCurrentValue,
